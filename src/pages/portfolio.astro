@@ -56,6 +56,30 @@ const hasActiveIncomeNote = (row: any) => {
       </p>
     </div>
 
+    {/* Investment Strategy Instructions */}
+    <div class="bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50 border-2 border-blue-200 p-5 md:p-7 mb-6 md:mb-8 rounded-2xl shadow-xl">
+      <h2 class="text-xl md:text-2xl font-bold text-[#152433] mb-4 flex items-center gap-2">
+        <svg class="w-6 h-6 text-[#1e3a5f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        Investment Strategy
+      </h2>
+      <div class="space-y-3 text-sm md:text-base text-gray-800 leading-relaxed">
+        <div class="flex items-start gap-3">
+          <div class="flex-shrink-0 w-6 h-6 rounded bg-orange-200 border-2 border-orange-400 mt-0.5"></div>
+          <p><strong class="text-[#f59e0b]">Orange Background:</strong> Buy now with active income. These are growth positions to build with earned income.</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="flex-shrink-0 w-6 h-6 rounded bg-white border-2 border-gray-300 mt-0.5"></div>
+          <p><strong class="text-gray-700">White Background:</strong> Stable dividend-paying stocks. Reinvest dividends from orange stocks into these positions.</p>
+        </div>
+        <div class="pt-2 border-t border-blue-200">
+          <p class="font-semibold text-[#1e3a5f]">📋 Execution Plan:</p>
+          <p class="mt-1">In each tier, buy one of each stock, then repeat through the list. This creates a balanced, diversified approach to building your portfolio over time.</p>
+        </div>
+      </div>
+    </div>
+
     {error ? (
       <div class="bg-red-50 border-l-4 border-red-400 p-4 rounded">
         <p class="text-sm text-red-800 mb-2">
@@ -75,30 +99,47 @@ const hasActiveIncomeNote = (row: any) => {
     ) : rows.length === 0 ? (
       <p class="text-gray-600">No data available at the moment.</p>
     ) : (
-      <div class="overflow-x-auto shadow-2xl rounded-2xl border-2 border-gray-100">
-        <table class="min-w-full bg-white rounded-2xl">
-          <thead class="bg-gray-100">
-            <tr>
+      <>
+        {/* Mobile Card View */}
+        <div class="md:hidden space-y-4">
+          {rows.map((row) => (
+            <div class={`p-4 rounded-lg shadow-lg border-2 ${hasActiveIncomeNote(row) ? 'bg-orange-50 border-orange-200' : 'bg-white border-gray-100'}`}>
               {headers.map(header => (
-                <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700 border-b">
-                  {header}
-                </th>
+                <div class="mb-2 last:mb-0">
+                  <span class="font-semibold text-xs text-gray-600 block mb-1">{header}</span>
+                  <span class="text-sm text-gray-900">{row[header] || '—'}</span>
+                </div>
               ))}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row, idx) => (
-              <tr class={hasActiveIncomeNote(row) ? 'bg-orange-100' : (idx % 2 === 0 ? 'bg-white' : 'bg-gray-50')}>
+            </div>
+          ))}
+        </div>
+        
+        {/* Desktop Table View */}
+        <div class="hidden md:block overflow-x-auto shadow-2xl rounded-2xl border-2 border-gray-100">
+          <table class="min-w-full bg-white rounded-2xl">
+            <thead class="bg-gray-100">
+              <tr>
                 {headers.map(header => (
-                  <td class="px-4 py-3 text-sm text-gray-900 border-b">
-                    {row[header] || '—'}
-                  </td>
+                  <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700 border-b">
+                    {header}
+                  </th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {rows.map((row, idx) => (
+                <tr class={hasActiveIncomeNote(row) ? 'bg-orange-100' : (idx % 2 === 0 ? 'bg-white' : 'bg-gray-50')}>
+                  {headers.map(header => (
+                    <td class="px-4 py-3 text-sm text-gray-900 border-b">
+                      {row[header] || '—'}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </>
     )}
 
     <div class="mt-8 text-sm text-gray-500">
