@@ -29,6 +29,16 @@ export default function DataChangeNotification({ data, storageKey }: Props) {
       // Update stored hash
       localStorage.setItem(storageKey, currentHash);
     }
+
+    // Expose trigger function to console for testing
+    (window as any).triggerDataChangeAlert = () => {
+      setShowNotification(true);
+    };
+
+    // Log instructions to console
+    console.log('%c💡 Developer Tip:', 'color: #f59e0b; font-weight: bold; font-size: 14px;');
+    console.log('%cTo manually trigger the data change alert, run:', 'color: #1e3a5f; font-size: 12px;');
+    console.log('%ctriggerDataChangeAlert()', 'color: #22c55e; font-weight: bold; font-size: 12px; background: #000; padding: 4px 8px; border-radius: 4px;');
   }, [data, storageKey]);
 
   const handleDismiss = () => {

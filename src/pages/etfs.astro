@@ -3,7 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import DataChangeNotification from '../components/react/DataChangeNotification';
-import TestNotificationButton from '../components/react/TestNotificationButton';
 import { fetchEtfRows } from '../lib/sheets';
 
 let rows: any[] = [];
@@ -105,8 +104,6 @@ const headers = rows.length > 0 ? Object.keys(rows[0]) : [];
         </a>.
       </p>
     </div>
-    
-    <TestNotificationButton storageKey="etf-data" client:load />
   </div>
 
   <Footer slot="footer" />
