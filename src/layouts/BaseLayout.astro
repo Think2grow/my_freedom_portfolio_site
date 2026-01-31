@@ -1,4 +1,6 @@
 ---
+import '../styles/global.css';
+
 interface Props {
   title: string;
   description?: string;
@@ -47,8 +49,6 @@ const jsonLd = {
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={pageDescription} />
-  
-  <link rel="stylesheet" href="/src/styles/global.css" />
 </head>
 <body class="min-h-screen flex flex-col bg-white text-gray-900 relative overflow-x-hidden">
   <!-- Faded Logo Background Watermark -->
