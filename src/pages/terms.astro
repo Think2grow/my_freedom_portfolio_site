@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Terms of Service" description="Terms of service for My Freedom Portfolio.">
+  <Nav slot="nav" />
+  
+  <div class="max-w-4xl mx-auto px-4 py-12">
+    <h1 class="text-4xl font-bold mb-6">Terms of Service</h1>
+    
+    <div class="prose max-w-none">
+      <p class="text-sm text-gray-500 mb-6">Last updated: January 30, 2026</p>
+      
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">Acceptance of Terms</h2>
+        <p class="text-gray-700 leading-relaxed">
+          By accessing and using this website, you accept and agree to be bound by the terms and provisions of this agreement.
+        </p>
+      </section>
+      
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">Educational Purpose</h2>
+        <p class="text-gray-700 leading-relaxed">
+          All content on this site is for educational and entertainment purposes only. Nothing on this site constitutes financial, investment, legal, or tax advice.
+        </p>
+      </section>
+      
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">No Investment Advice</h2>
+        <p class="text-gray-700 leading-relaxed">
+          We are not registered financial advisors. You should always consult with a qualified professional before making any investment decisions.
+        </p>
+      </section>
+      
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">Limitation of Liability</h2>
+        <p class="text-gray-700 leading-relaxed">
+          We are not liable for any losses or damages that may result from your use of this website or the information contained herein.
+        </p>
+      </section>
+      
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">Changes to Terms</h2>
+        <p class="text-gray-700 leading-relaxed">
+          We reserve the right to modify these terms at any time. Continued use of the site constitutes acceptance of any changes.
+        </p>
+      </section>
+    </div>
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>

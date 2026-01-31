@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import AnimatedButtonRow from '../components/react/AnimatedButtonRow';
+
+const buttons = [
+  { href: '/portfolio', label: 'See the Portfolio Here', variant: 'primary' as const },
+  { href: '/etfs', label: 'Weekly ETF List', variant: 'secondary' as const }
+];
+
+// Warren Buffett quotes collection
+const warrenBuffettQuotes = [
+  "The stock market is designed to transfer money from the Active to the Patient.",
+  "Price is what you pay. Value is what you get.",
+  "Risk comes from not knowing what you're doing.",
+  "Be fearful when others are greedy and greedy when others are fearful.",
+  "It's far better to buy a wonderful company at a fair price than a fair company at a wonderful price.",
+  "Our favorite holding period is forever.",
+  "The best investment you can make is in yourself.",
+  "Never invest in a business you cannot understand.",
+  "Time is the friend of the wonderful company, the enemy of the mediocre.",
+  "The stock market is a device for transferring money from the impatient to the patient.",
+  "Diversification is protection against ignorance. It makes little sense if you know what you are doing.",
+  "Rule No. 1: Never lose money. Rule No. 2: Never forget rule No. 1.",
+  "Someone's sitting in the shade today because someone planted a tree a long time ago.",
+  "Only buy something that you'd be perfectly happy to hold if the market shut down for 10 years.",
+  "Wide diversification is only required when investors do not understand what they are doing.",
+  "It takes 20 years to build a reputation and five minutes to ruin it. If you think about that, you'll do things differently.",
+  "The most important investment you can make is in yourself.",
+  "Opportunities come infrequently. When it rains gold, put out the bucket, not the thimble.",
+  "In the business world, the rearview mirror is always clearer than the windshield.",
+  "The difference between successful people and really successful people is that really successful people say no to almost everything."
+];
+
+// Select a random quote
+const randomQuote = warrenBuffettQuotes[Math.floor(Math.random() * warrenBuffettQuotes.length)];
+---
+
+<BaseLayout title="My Freedom Portfolio">
+  <Nav slot="nav" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <div class="max-w-6xl mx-auto px-4 py-8 md:py-12 space-y-8 md:space-y-12">
+    <!-- Disclaimer Section -->
+    <section class="bg-gradient-to-br from-orange-50 via-yellow-50 to-orange-100 border-l-[6px] border-[#f59e0b] p-6 md:p-8 rounded-2xl shadow-2xl transform hover:scale-[1.01] transition-transform duration-300">
+      <h2 class="font-black text-lg md:text-xl mb-3 text-[#152433] tracking-tight">Important Disclaimer</h2>
+      <p class="text-base text-gray-700 leading-relaxed">
+        Past performance is not indicative of future results. The information on this site is for educational and entertainment purposes only and should not be considered financial advice. Always do your own research and consult with a qualified financial advisor before making any investment decisions.
+      </p>
+    </section>
+
+    <!-- Quote Section -->
+    <section class="text-center py-6 md:py-10 bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50 rounded-2xl shadow-xl border border-gray-100">
+      <blockquote class="text-xl md:text-2xl text-gray-800 mb-4 px-4 md:px-8 leading-relaxed" style="font-family: 'Playfair Display', serif; font-weight: 600;">
+        "{randomQuote}"
+      </blockquote>
+      <cite class="text-sm md:text-base text-gray-600 font-bold tracking-wide">— Warren Buffett</cite>
+    </section>
+
+    <!-- Hero Section -->
+    <section class="text-center space-y-6 md:space-y-8 py-4 md:py-6">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-transparent bg-gradient-to-r from-[#152433] via-[#1e3a5f] to-[#152433] bg-clip-text tracking-tight leading-tight">
+        My Freedom Portfolio
+      </h1>
+      <p class="text-lg md:text-xl text-gray-800 max-w-4xl mx-auto leading-relaxed font-medium px-4">
+        Building wealth through disciplined, long-term investing. Track our portfolio and explore weekly ETF opportunities.
+      </p>
+    </section>
+
+    <!-- Buttons -->
+    <section class="py-6 md:py-8">
+      <AnimatedButtonRow buttons={buttons} client:visible />
+    </section>
+
+    <!-- Additional Info -->
+    <section class="text-center text-sm md:text-base text-gray-600 pt-8 md:pt-10 border-t border-gray-200 px-4">
+      <p>
+        This site provides educational content to help you make informed investment decisions. 
+        All data is updated regularly from our public Google Sheets.
+      </p>
+    </section>
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>

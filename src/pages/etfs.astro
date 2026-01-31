@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import DataChangeNotification from '../components/react/DataChangeNotification';
+import TestNotificationButton from '../components/react/TestNotificationButton';
+import { fetchEtfRows } from '../lib/sheets';
+
+let rows: any[] = [];
+let error: string | null = null;
+
+try {
+  rows = await fetchEtfRows();
+  
+  // Sort rows: "Yes" in "Do I Own It?" column first
+  rows = rows.sort((a, b) => {
+    const aOwns = a['Do I Own It?'] === 'Yes';
+    const bOwns = b['Do I Own It?'] === 'Yes';
+    
+    if (aOwns && !bOwns) return -1;
+    if (!aOwns && bOwns) return 1;
+    return 0;
+  });
+} catch (e) {
+  error = e instanceof Error ? e.message : 'Failed to load ETF data';
+  console.error('ETF fetch error:', e);
+}
+
+const headers = rows.length > 0 ? Object.keys(rows[0]) : [];
+---
+
+<BaseLayout 
+  title="Weekly ETF List" 
+  description="Explore our weekly ETF watchlist and investment opportunities."
+  hideBackgroundLogo={true}
+>
+  <Nav slot="nav" />
+  
+  <div class="max-w-7xl mx-auto px-4 py-8 md:py-12">
+    <DataChangeNotification data={rows} storageKey="etf-data" client:load />
+    
+    <h1 class="text-4xl md:text-5xl font-black mb-6 md:mb-8 text-transparent bg-gradient-to-r from-[#152433] via-[#1e3a5f] to-[#152433] bg-clip-text">Weekly ETF List</h1>
+    
+    <div class="bg-gradient-to-br from-orange-50 via-yellow-50 to-orange-100 border-l-[6px] border-[#f59e0b] p-4 md:p-6 mb-6 md:mb-8 rounded-2xl shadow-2xl">
+      <p class="text-sm text-yellow-800">
+        <strong>Disclaimer:</strong> This list is for educational purposes only. Not financial advice. Do your own research.
+      </p>
+    </div>
+
+    {error ? (
+      <div class="bg-red-50 border-l-4 border-red-400 p-4 rounded">
+        <p class="text-sm text-red-800 mb-2">
+          <strong>Error loading data:</strong> {error}
+        </p>
+        <p class="text-sm text-red-700">
+          <a 
+            href="https://docs.google.com/spreadsheets/d/1irkOwYS3phsSBpeHMq1xt6XyfTcMQEBuZdPfOsh0SOw/edit?gid=0#gid=0" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="underline hover:text-red-900"
+          >
+            View the original Google Sheet
+          </a>
+        </p>
+      </div>
+    ) : rows.length === 0 ? (
+      <p class="text-gray-600">No data available at the moment.</p>
+    ) : (
+      <div class="overflow-x-auto shadow-2xl rounded-2xl border-2 border-gray-100">
+        <table class="min-w-full bg-white rounded-2xl">
+          <thead class="bg-gray-100">
+            <tr>
+              {headers.map(header => (
+                <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700 border-b">
+                  {header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row, idx) => (
+              <tr class={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                {headers.map(header => (
+                  <td class="px-4 py-3 text-sm text-gray-900 border-b">
+                    {row[header] || '—'}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )}
+
+    <div class="mt-8 text-sm text-gray-500">
+      <p>
+        Data is cached for 10 minutes. Last fetched from 
+        <a 
+          href="https://docs.google.com/spreadsheets/d/1irkOwYS3phsSBpeHMq1xt6XyfTcMQEBuZdPfOsh0SOw/edit?gid=0#gid=0" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="underline hover:text-gray-700"
+        >
+          Google Sheets
+        </a>.
+      </p>
+    </div>
+    
+    <TestNotificationButton storageKey="etf-data" client:load />
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>

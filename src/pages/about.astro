@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="About Us" description="Learn more about My Freedom Portfolio and our investment philosophy.">
+  <Nav slot="nav" />
+  
+  <div class="max-w-4xl mx-auto px-4 py-12">
+    <h1 class="text-4xl font-bold mb-6">About My Freedom Portfolio</h1>
+    
+    <div class="prose prose-lg max-w-none">
+      <p class="text-lg text-gray-700 leading-relaxed mb-4">
+        My Freedom Portfolio is dedicated to helping individuals build wealth through informed, long-term investing strategies.
+      </p>
+      
+      <h2 class="text-2xl font-semibold mt-8 mb-4">Our Philosophy</h2>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        We believe in the power of patient, disciplined investing. Our approach focuses on low-cost index funds, ETFs, and dividend-paying stocks that provide steady growth over time.
+      </p>
+      
+      <h2 class="text-2xl font-semibold mt-8 mb-4">Educational Focus</h2>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        All content on this site is for educational and entertainment purposes only. We share our portfolio and research to help others learn about investing, but this is not financial advice.
+      </p>
+      
+      <div class="bg-gray-100 p-6 rounded-lg mt-8">
+        <p class="text-sm text-gray-600">
+          <strong>Important:</strong> Always conduct your own research and consult with a qualified financial advisor before making investment decisions.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>

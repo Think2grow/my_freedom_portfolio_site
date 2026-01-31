@@ -1,0 +1,41 @@
+---
+const navItems = [
+  { href: "/", label: "Home" },
+  { href: "/portfolio", label: "Portfolio" },
+  { href: "/etfs", label: "ETFs" },
+  { href: "/about", label: "About" }
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="bg-gradient-to-r from-[#152433] via-[#1e3a5f] to-[#152433] border-b-2 border-[#f59e0b] shadow-2xl backdrop-blur-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+      <div class="flex-shrink-0">
+        <a href="/" class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent tracking-tight">
+          My Freedom Portfolio
+        </a>
+      </div>
+      <div class="hidden md:flex space-x-8">
+        {navItems.map(item => (
+          <a 
+            href={item.href}
+            class={`text-base font-bold tracking-wide hover:text-[#f59e0b] transition-all duration-300 transform hover:scale-105 ${
+              currentPath === item.href ? 'text-[#f59e0b] border-b-3 border-[#f59e0b] pb-1 scale-105' : 'text-white hover:border-b-3 hover:border-[#f59e0b] pb-1'
+            }`}
+          >
+            {item.label}
+          </a>
+        ))}
+      </div>
+      <div class="md:hidden">
+        <button type="button" class="text-white hover:text-[#f59e0b] transition-colors" aria-label="Menu">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>

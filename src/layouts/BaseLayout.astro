@@ -1,0 +1,71 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+  noindex?: boolean;
+  hideBackgroundLogo?: boolean;
+}
+
+const siteName = import.meta.env.PUBLIC_SITE_NAME || "My Freedom Portfolio";
+const siteUrl = import.meta.env.SITE || "http://localhost:4321";
+
+const { title, description, canonical, noindex, hideBackgroundLogo } = Astro.props;
+const pageTitle = title === siteName ? title : `${title} | ${siteName}`;
+const pageDescription = description || "Build your freedom through informed investing. Educational content and portfolio tracking.";
+const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).toString();
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": siteName,
+  "url": siteUrl,
+  "description": pageDescription
+};
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="canonical" href={canonicalUrl} />
+  
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDescription} />
+  
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+  
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={pageDescription} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:type" content="website" />
+  
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={pageDescription} />
+  
+  <link rel="stylesheet" href="/src/styles/global.css" />
+</head>
+<body class="min-h-screen flex flex-col bg-white text-gray-900 relative overflow-x-hidden">
+  <!-- Faded Logo Background Watermark -->
+  {!hideBackgroundLogo && (
+    <div class="fixed inset-0 pointer-events-none z-0" style="background-image: url('/2fbb4111-e6dd-479f-9f4a-9313b0ab1a2f-md.png'); background-position: center; background-repeat: no-repeat; background-size: 50%; opacity: 0.15;"></div>
+  )}
+  
+  <div class="relative z-10">
+    <slot name="header">
+      <slot name="nav" />
+    </slot>
+    
+    <main class="flex-1">
+      <slot />
+    </main>
+    
+    <slot name="footer" />
+  </div>
+</body>
+</html>
